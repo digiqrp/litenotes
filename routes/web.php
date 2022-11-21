@@ -14,17 +14,6 @@
 |
 */
 
-Route::get('/',[WelcomeController::class,'index']);
-
-Route::get('/home', function () {
-    return view('home',['name'=>'Mark Gregory']);
-});
-
-Route::get('/about',function(){
-   return view('about');
-});
-
-
-Route::get('/generate/password',function (){
-    return bcrypt('123456789');
+Route::get('/', function () {
+    return view('welcome');
 });
