@@ -31,7 +31,7 @@
                     <form action="{{ route('trashed.update', $note) }}" method="post" class="ml-auto">
                         @method('put')
                         @csrf
-                        <button type="submit" class="btn-link">Restore Note</a>
+                        <button type="submit" class="btn-link">Restore Note</button>
                     </form>
 
                     <form action="{{ route('trashed.destroy', $note) }}" method="post">
@@ -45,7 +45,7 @@
                 <h2 class="font-bold text-4xl">
                     {{ $note->title }}
                 </h2>
-                <p class="mt-6 whitespace-pre-wrap">{{ $note->text }}</p>
+                <p class="mt-6 whitespace-pre-wrap">{{ strip_tags($note->text) }}</p>
             </div>
         </div>
     </div>
