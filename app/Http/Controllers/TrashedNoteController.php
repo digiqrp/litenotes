@@ -3,11 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Note;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
 class TrashedNoteController extends Controller
 {
+    /**
+     * Main display for all notes
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View
+     */
     public function index(){
         $notes = Note::whereBelongsTo(Auth::user())
             ->onlyTrashed()
@@ -17,6 +20,11 @@ class TrashedNoteController extends Controller
         return view('notes.index')->with('notes',$notes);
     }
 
+    /**
+     * Display a separate note
+     * @param Note $note
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|never
+     */
     public function show(Note $note){
 
         if (!$note->user->is(Auth::user())){
@@ -25,6 +33,11 @@ class TrashedNoteController extends Controller
         return view('notes.show')->with('note',$note);
     }
 
+    /**
+     * Update a Note
+     * @param Note $note
+     * @return \Illuminate\Http\RedirectResponse|never
+     */
     public function update(Note $note){
         if (!$note->user->is(Auth::user())){
             return abort(403,'Access Denied');
@@ -47,6 +60,4 @@ class TrashedNoteController extends Controller
         $note->forceDelete();
         return to_route('trashed.index')->with('success','Note moved to trash successfully');
     }
-
-
 }
